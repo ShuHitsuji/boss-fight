@@ -16,7 +16,7 @@ new Vue({
             var healing=0;
             var currentHealth=this.monsterHealth;
             this.playerHealth-=damage;
-            if(damage>8){
+            if(damage>10){
                 this.monsterHealth+=damage;          
                 if((currentHealth+damage)>100){
                     healing=damage-(this.monsterHealth-100);
