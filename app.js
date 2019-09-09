@@ -13,13 +13,26 @@ new Vue({
         },
         monsterAttack:function(){
             var damage=this.calculateDamage(5,12);
+            var healing=0;
+            var currentHealth=this.monsterHealth;
             this.playerHealth-=damage;
+            if(damage>8){
+                this.monsterHealth+=damage;          
+                if((currentHealth+damage)>100){
+                    healing=damage-(this.monsterHealth-100);
+                    this.monsterHealth=100;
+                    if(healing>0)
+                        this.logs.unshift("The monster lifesteal: +"+healing+"HP");
+                }else{
+                    this.logs.unshift("The monster lifesteal: +"+damage+"HP");
+                }
+            }
             this.checkWin();
-            this.logs.unshift("el monstruo hizo: "+damage+" de damage al player");
+            this.logs.unshift("The monster deal: "+damage+" damage to you");
         },
         checkWin:function(){
             if(this.monsterHealth<=0){
-                if(confirm('GANASTE!!!! JUGAR DE NUEVO?')){
+                if(confirm('U WIN THIS TIME, play again?')){
                     this.empezarJuego();
                 }else{
                     this.gameIsRunning=false;
@@ -44,16 +57,16 @@ new Vue({
         ataque:function(){
             var damage=this.calculateDamage(3,10);
             this.monsterHealth-=damage;
-            this.logs.unshift("el player hizo: "+damage+" de damage al monstruo");
+            this.logs.unshift("You deal: "+damage+" to the monster");
             if(this.checkWin()){
                 return;
             }
             this.monsterAttack();
         },
         ataqueEspecial:function(){
-            var damage=this.calculateDamage(10,20);
+            var damage=this.calculateDamage(0,15);
             this.monsterHealth-=damage;
-            this.logs.unshift("el player hizo: "+damage+" de damage al monstruo");
+            this.logs.unshift("You deal: "+damage+" to the monster with your special attack");
             if(this.checkWin()){
                 return;
             }
@@ -63,14 +76,19 @@ new Vue({
             this.monsterAttack();
                 if(this.checkWin()){
                     return;
-                }   
-            var healing=this.calculateDamage(5,15);// es mas divertido con un healing random y que el monstruo te pueda matar antes de que te cures
+                }
+            var currentHealth=this.playerHealth;   
+            var healing=this.calculateDamage(5,15);// random healing hehe
+
             this.playerHealth+=healing;
-            this.logs.unshift("el player se curo: "+healing+" puntos de vida");
-            if(this.playerHealth>100){
+            if((currentHealth+healing)>100){
+                healingB=healing-(this.playerHealth-100);
                 this.playerHealth=100;
-            }
-                
+                if(healingB>0)
+                this.logs.unshift("You healed for: "+healingB+" HP");
+            }else{
+                this.logs.unshift("You healed for: "+healing+" HP");
+            }      
         },
         rendirse:function(){
             this.gameIsRunning=false;
