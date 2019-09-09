@@ -55,7 +55,7 @@ new Vue({
             this.logs=[];
         },
         ataque:function(){
-            var damage=this.calculateDamage(3,10);
+            var damage=this.calculateDamage(3,7);
             this.monsterHealth-=damage;
             this.logs.unshift("You deal: "+damage+" to the monster");
             if(this.checkWin()){
@@ -64,7 +64,7 @@ new Vue({
             this.monsterAttack();
         },
         ataqueEspecial:function(){
-            var damage=this.calculateDamage(0,15);
+            var damage=this.calculateDamage(0,13);
             this.monsterHealth-=damage;
             this.logs.unshift("You deal: "+damage+" to the monster with your special attack");
             if(this.checkWin()){
@@ -78,7 +78,7 @@ new Vue({
                     return;
                 }
             var currentHealth=this.playerHealth;   
-            var healing=this.calculateDamage(5,15);// random healing hehe
+            var healing=this.calculateDamage(5,20);// random healing hehe
 
             this.playerHealth+=healing;
             if((currentHealth+healing)>100){
