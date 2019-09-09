@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Asesino de Monstruos</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    
+</head>
+<body>
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">TU</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: goldenrod; margin: 0; color: white;"
+                :style="{width: playerHealth + '%'}">
+                    {{playerHealth}}
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTRUO</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: rgb(0, 81, 128); margin: 0; color: white;"
+                :style="{width:monsterHealth + '%'}">
+                    {{monsterHealth}}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls" v-if="!gameIsRunning">
+        <div class="small-12 columns">
+            <button id="start-game" v-on:click="empezarJuego">EMPEZAR JUEGO NUEVO</button>
+        </div>
+    </section>
+    <section class="row controls" v-else>
+        <div class="small-12 columns" >
+            <button v-on:click="ataque" id="attack">ATACAR</button>
+            <button v-on:click="ataqueEspecial" id="special-attack">ATAQUE ESPECIAL</button>
+            <button v-on:click="curar" id="heal">CURAR</button>
+            <button v-on:click="rendirse" id="give-up">GIVE UP</button>
+        </div>
+    </section>
+    <section class="row log">
+        <div class="small-12 columns">
+            <ul>
+                <li v-for="log in logs">
+                    {{log}}
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
