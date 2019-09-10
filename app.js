@@ -24,12 +24,14 @@ new Vue({
                     healing=damage-(this.monsterHealth-100);
                     this.monsterHealth=100;
                     if(healing>0)
-                        this.logs.unshift("The monster lifesteal: +"+healing+"HP");
+                        this.logs.unshift("The monster lifesteal: +"+healing+" HP");
                 }else{
-                    this.logs.unshift("The monster lifesteal: +"+damage+"HP");
+                    this.logs.unshift("The monster lifesteal: +"+damage+" HP");
                 }
+            }else{
+                this.logs.unshift("The monster deal: "+damage+" damage to you");
             }
-            this.logs.unshift("The monster deal: "+damage+" damage to you");
+            
             this.checkWin();
 
         },
