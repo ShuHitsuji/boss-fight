@@ -29,8 +29,9 @@ new Vue({
                     this.logs.unshift("The monster lifesteal: +"+damage+"HP");
                 }
             }
-            this.checkWin();
             this.logs.unshift("The monster deal: "+damage+" damage to you");
+            this.checkWin();
+
         },
         checkWin:function(){
             if(this.monsterHealth<=0){
