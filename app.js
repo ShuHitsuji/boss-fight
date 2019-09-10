@@ -7,7 +7,6 @@ new Vue({
         playerHasMana:true,
         gameIsRunning:false,
         logs:[]
-
     },
     methods:{
         calculateDamage:function(min,max){
@@ -30,10 +29,8 @@ new Vue({
                 }
             }else{
                 this.logs.unshift("The monster deal: "+damage+" damage to you");
-            }
-            
+            }     
             this.checkWin();
-
         },
         checkWin:function(){
             if(this.monsterHealth<=0){
@@ -104,26 +101,23 @@ new Vue({
         },
         curar:function(){
             this.logs=[];      
-            var manaCost=2;
-            var currentHealth=this.playerHealth;   
+            var manaCost=2;          
             var healing=this.calculateDamage(10,25);// random healing hehe
             this.checkMana(manaCost);
             if(this.playerHasMana){
                 this.monsterAttack();
-                if(this.checkWin()){
-                    return;
-                }        
+                var currentHealth=this.playerHealth;
                 this.playerHealth+=healing;
                 this.playerMana-=manaCost;
                 if((currentHealth+healing)>100){
                     healingB=healing-(this.playerHealth-100);
                     this.playerHealth=100;
                     if(healingB>0)
-                    this.logs.unshift("You healed for: "+healingB+" HP");
+                        this.logs.unshift("You healed for: "+healingB+" HP");
                 }else{
                     this.logs.unshift("You healed for: "+healing+" HP");
-                }
-            }     
+                }                               
+            }  
         },
         rendirse:function(){
             this.logs=[]; 
