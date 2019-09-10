@@ -108,7 +108,8 @@ new Vue({
                 this.monsterAttack();
                 var currentHealth=this.playerHealth;
                 this.playerHealth+=healing;
-                this.playerMana-=manaCost;
+                if(currentHealth<100)
+                    this.playerMana-=manaCost;
                 if((currentHealth+healing)>100){
                     healingB=healing-(this.playerHealth-100);
                     this.playerHealth=100;
