@@ -126,6 +126,7 @@ new Vue({
             }     
         },
         rendirse:function(){
+            this.logs=[]; 
             this.gameIsRunning=false;
             this.logs.unshift("Feels bad man, too strong for u?");
         }
