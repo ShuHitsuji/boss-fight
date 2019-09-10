@@ -71,8 +71,8 @@ new Vue({
             this.monsterAttack();
         },
         ataqueEspecial:function(){
-            var damage=this.calculateDamage(6,20);
-            var manaCost=4;
+            var damage=this.calculateDamage(6,15);
+            var manaCost=2;
             this.checkMana(manaCost);
             if(this.playerHasMana){
                 this.monsterHealth-=damage;
