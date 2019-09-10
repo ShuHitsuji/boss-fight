@@ -2,7 +2,9 @@ new Vue({
     el:"#app",
     data:{
         playerHealth:100,
+        playerMana:10,
         monsterHealth:100,
+        playerHasMana:true,
         gameIsRunning:false,
         logs:[]
 
@@ -50,49 +52,74 @@ new Vue({
         },
         empezarJuego: function(){
             this.playerHealth=100;
+            this.playerMana=10;
             this.monsterHealth=100;
+            this.playerHasMana=true;
             this.gameIsRunning=true;
             this.logs=[];
         },
         ataque:function(){
             var damage=this.calculateDamage(3,7);
             this.monsterHealth-=damage;
+            this.playerMana++;
             this.logs.unshift("You deal: "+damage+" to the monster");
             if(this.checkWin()){
                 return;
             }
+            this.checkMana();
             this.monsterAttack();
         },
         ataqueEspecial:function(){
-            var damage=this.calculateDamage(0,13);
-            this.monsterHealth-=damage;
-            this.logs.unshift("You deal: "+damage+" to the monster with your special attack");
-            if(this.checkWin()){
-                return;
-            }
-            this.monsterAttack();
-        },
-        curar:function(){      
-            this.monsterAttack();
+            var damage=this.calculateDamage(0,20);
+            var manaCost=3;
+            this.checkMana(manaCost);
+            if(this.playerHasMana){
+                this.monsterHealth-=damage;
+                this.playerMana-=manaCost;
+                this.logs.unshift("You deal: "+damage+" to the monster with your special attack");
+                
                 if(this.checkWin()){
                     return;
                 }
+                
+                this.monsterAttack();
+            }
+            
+        },
+        checkMana:function(a){
+            if(this.playerMana < a){
+                this.playerHasMana = false;
+            }else{
+                this.playerHasMana = true;
+            }
+            if(this.playerMana>10){
+                this.playerMana = 10;
+            }
+        },
+        curar:function(){      
+            var manaCost=2;
             var currentHealth=this.playerHealth;   
             var healing=this.calculateDamage(5,20);// random healing hehe
-
-            this.playerHealth+=healing;
-            if((currentHealth+healing)>100){
-                healingB=healing-(this.playerHealth-100);
-                this.playerHealth=100;
-                if(healingB>0)
-                this.logs.unshift("You healed for: "+healingB+" HP");
-            }else{
-                this.logs.unshift("You healed for: "+healing+" HP");
-            }      
+            if(this.checkMana(manaCost)){
+                this.monsterAttack();
+                if(this.checkWin()){
+                    return;
+                }        
+                this.playerHealth+=healing;
+                this.playerMana-=manaCost;
+                if((currentHealth+healing)>100){
+                    healingB=healing-(this.playerHealth-100);
+                    this.playerHealth=100;
+                    if(healingB>0)
+                    this.logs.unshift("You healed for: "+healingB+" HP");
+                }else{
+                    this.logs.unshift("You healed for: "+healing+" HP");
+                }
+            }     
         },
         rendirse:function(){
             this.gameIsRunning=false;
-          
+            this.logs.unshift("Feels bad man, too strong for u?");
         }
     }
 });

@@ -14,9 +14,15 @@
             <h1 class="text-center">YOU</h1>
             <img src="image/hero.png" alt="The hero" style="width:200px;height:200px;" class="img-center">
             <div class="healthbar">
-                <div class="healthbar text-center" style="background-color: goldenrod; margin: 0; color: white;"
+                <div class="healthbar text-center" style="background-color: rgb(32, 218, 57); margin: 0; color: white;"
                 :style="{width: playerHealth + '%'}">
                     {{playerHealth}}
+                </div>
+            </div>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: rgb(0, 195, 255); margin: 0; color: white;"
+                :style="{width: (playerMana*10) + '%'}">
+                    {{playerMana}}
                 </div>
             </div>
         </div>
@@ -24,7 +30,7 @@
             <h1 class="text-center">MONSTER</h1>
             <img src="image/monster.png" alt="The monster" style="width:200px;height:200px;"  class="img-center">
             <div class="healthbar">
-                <div class="healthbar text-center" style="background-color: rgb(0, 81, 128); margin: 0; color: white;"
+                <div class="healthbar text-center" style="background-color: rgb(243, 0, 0); margin: 0; color: white;"
                 :style="{width:monsterHealth + '%'}">
                     {{monsterHealth}}
                 </div>
@@ -39,8 +45,8 @@
     <section class="row controls" v-else>
         <div class="small-12 columns" >
             <button v-on:click="ataque" id="attack">ATTACK</button>
-            <button v-on:click="ataqueEspecial" id="special-attack">SPECIAL ATTACK</button>
-            <button v-on:click="curar" id="heal">DRINK POTION</button>
+            <button v-on:click="ataqueEspecial" id="special-attack" :disabled="!playerHasMana">SPECIAL ATTACK</button>
+            <button v-on:click="curar" id="heal":disabled="!playerHasMana">DRINK POTION</button>
             <button v-on:click="rendirse" id="give-up">GIVE UP</button>
         </div>
     </section>
