@@ -61,7 +61,8 @@ new Vue({
         ataque:function(){
             var damage=this.calculateDamage(3,7);
             this.monsterHealth-=damage;
-            this.playerMana++;
+            var manaRegen=2;
+            this.playerMana+=manaRegen;
             this.logs.unshift("You deal: "+damage+" to the monster");
             if(this.checkWin()){
                 return;
@@ -71,7 +72,7 @@ new Vue({
         },
         ataqueEspecial:function(){
             var damage=this.calculateDamage(0,20);
-            var manaCost=3;
+            var manaCost=4;
             this.checkMana(manaCost);
             if(this.playerHasMana){
                 this.monsterHealth-=damage;
@@ -99,8 +100,9 @@ new Vue({
         curar:function(){      
             var manaCost=2;
             var currentHealth=this.playerHealth;   
-            var healing=this.calculateDamage(5,20);// random healing hehe
-            if(this.checkMana(manaCost)){
+            var healing=this.calculateDamage(10,20);// random healing hehe
+            this.checkMana(manaCost);
+            if(this.playerHasMana){
                 this.monsterAttack();
                 if(this.checkWin()){
                     return;
