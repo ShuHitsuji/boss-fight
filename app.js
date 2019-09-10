@@ -60,6 +60,7 @@ new Vue({
             this.logs=[];
         },
         ataque:function(){
+            this.logs=[];
             var damage=this.calculateDamage(3,7);
             this.monsterHealth-=damage;
             var manaRegen=2;
@@ -72,6 +73,7 @@ new Vue({
             this.monsterAttack();
         },
         ataqueEspecial:function(){
+            this.logs=[];
             var damage=this.calculateDamage(6,15);
             var manaCost=2;
             this.checkMana(manaCost);
@@ -98,7 +100,8 @@ new Vue({
                 this.playerMana = 10;
             }
         },
-        curar:function(){      
+        curar:function(){
+            this.logs=[];      
             var manaCost=2;
             var currentHealth=this.playerHealth;   
             var healing=this.calculateDamage(10,30);// random healing hehe
