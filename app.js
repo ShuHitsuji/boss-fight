@@ -92,6 +92,7 @@ new Vue({
         checkMana:function(a){
             if(this.playerMana < a){
                 this.playerHasMana = false;
+                this.logs.unshift("You don't have enough Mana");
             }else{
                 this.playerHasMana = true;
             }
