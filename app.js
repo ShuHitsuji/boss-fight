@@ -87,9 +87,11 @@ new Vue({
             this.monsterHealth-=damage;
             var manaRegen=2;
             this.playerMana+=manaRegen;
-            if(damage==5){
+            if(damage == 5){
                 this.playerHealth+=damage;
-                this.logs.unshift("You heal yourself: "+damage+"HP")
+                this.logs.unshift("You heal yourself: "+damage+"HP");
+                if(this.playerHealth > 100)
+                    this.playerHealth = 100;
             }
             this.logs.unshift("You deal: "+damage+" to the monster");
             if(this.checkWin()){
