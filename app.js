@@ -4,20 +4,29 @@ new Vue({
         playerHealth:100,
         playerMana:10,
         monsterHealth:100,
-        monsterIcecream:2,
+        monsterIcecream:0,
         playerHasMana:true,
         gameIsRunning:false,
-        logs:['Welcome to RNG BOSS if u win i will give u a hug','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself']
+        logs:['Welcome to RNG BOSS if u win u r so lucky','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself']
     },
     methods:{
         calculateDamage:function(min,max){
             return Math.max(Math.floor(Math.random()*max)+1,min);
         },
         monsterAttack:function(){
+            this.checkMonsterFood(); 
             var damage=this.calculateDamage(5,12);
+            if(this.calculateDamage(0,100)==75){
+                damage=100;//RNG HE CAN ONE SHOT U
+                this.logs.unshift("The monster ate u, hmmmm delicius, finally he ate some good food");
+            }
             var healing=0;
             var currentHealth=this.monsterHealth;
             this.playerHealth-=damage;
+            if(damage==7){
+                this.monsterIcecream++;
+                this.logs.unshift("The monster found a new icecream!! Yummi")
+            }
             if(damage>9){
                 this.monsterHealth+=damage;          
                 if((currentHealth+damage)>100){
@@ -31,12 +40,14 @@ new Vue({
             }else{
                 this.logs.unshift("The monster deal: "+damage+" damage to you");
             }
-            this.checkMonsterFood();     
-            this.checkWin();
+            setTimeout(()=>{
+                this.checkWin()
+             },1000);   
+            
         },
         checkMonsterFood(){
-            var healing =this.calculateDamage(10,50);
-            if(this.monsterIcecream>0 && this.monsterHealth<20){
+            var healing =this.calculateDamage(10,20);
+            if(this.monsterIcecream>0 && this.monsterHealth<50){
                 this.monsterHealth+=healing;
                 this.monsterIcecream--;
                 this.logs.unshift("The monster lick his ice-cream and heal itself +"+ healing + "HP")
@@ -64,7 +75,7 @@ new Vue({
             this.playerHealth=100;
             this.playerMana=10;
             this.monsterHealth=100;
-            this.monsterIcecream=2,
+            this.monsterIcecream=0,
             this.playerHasMana=true;
             this.gameIsRunning=true;
             this.logs=['Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself'];
@@ -76,6 +87,10 @@ new Vue({
             this.monsterHealth-=damage;
             var manaRegen=2;
             this.playerMana+=manaRegen;
+            if(damage==5){
+                this.playerHealth+=damage;
+                this.logs.unshift("You heal yourself: "+damage+"HP")
+            }
             this.logs.unshift("You deal: "+damage+" to the monster");
             if(this.checkWin()){
                 return;
