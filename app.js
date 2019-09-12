@@ -88,7 +88,7 @@ new Vue({
             var manaRegen=2;
             this.playerMana+=manaRegen;
             if(damage == 5){
-                this.playerHealth+=damage;
+                this.playerHealth+=damage+5;
                 this.logs.unshift("You heal yourself: "+damage+"HP");
                 if(this.playerHealth > 100)
                     this.playerHealth = 100;
