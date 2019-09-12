@@ -4,9 +4,10 @@ new Vue({
         playerHealth:100,
         playerMana:10,
         monsterHealth:100,
+        monsterIcecream:2,
         playerHasMana:true,
         gameIsRunning:false,
-        logs:['Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 6-15 damage','Potions heals 10-25HP','The monster can also heal itself']
+        logs:['Welcome to RNG BOSS if u win i will give u a hug','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself']
     },
     methods:{
         calculateDamage:function(min,max){
@@ -29,8 +30,17 @@ new Vue({
                 }
             }else{
                 this.logs.unshift("The monster deal: "+damage+" damage to you");
-            }     
+            }
+            this.checkMonsterFood();     
             this.checkWin();
+        },
+        checkMonsterFood(){
+            var healing =this.calculateDamage(10,50);
+            if(this.monsterIcecream>0 && this.monsterHealth<20){
+                this.monsterHealth+=healing;
+                this.monsterIcecream--;
+                this.logs.unshift("The monster lick his ice-cream and heal itself +"+ healing + "HP")
+            }
         },
         checkWin:function(){
             if(this.monsterHealth<=0){
@@ -54,9 +64,10 @@ new Vue({
             this.playerHealth=100;
             this.playerMana=10;
             this.monsterHealth=100;
+            this.monsterIcecream=2,
             this.playerHasMana=true;
             this.gameIsRunning=true;
-            this.logs=['Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 6-15 damage','Potions heals 10-25HP','The monster can also heal itself'];
+            this.logs=['Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself'];
 
         },
         ataque:function(){
@@ -74,7 +85,7 @@ new Vue({
         },
         ataqueEspecial:function(){
             this.logs=[];
-            var damage=this.calculateDamage(6,15);
+            var damage=this.calculateDamage(9,15);
             var manaCost=2;
             this.checkMana(manaCost);
             if(this.playerHasMana){
