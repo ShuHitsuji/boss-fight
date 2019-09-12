@@ -33,9 +33,9 @@ new Vue({
                     healing=damage-(this.monsterHealth-100);
                     this.monsterHealth=100;
                     if(healing>0)
-                        this.logs.unshift("The monster lifesteal: +"+healing+" HP");
+                        this.logs.unshift("The monster bites you and lifesteal: +"+healing+" HP");
                 }else{
-                    this.logs.unshift("The monster lifesteal: +"+damage+" HP");
+                    this.logs.unshift("The monster bites you and lifesteal: +"+damage+" HP");
                 }
             }else{
                 this.logs.unshift("The monster deal: "+damage+" damage to you");
@@ -86,10 +86,11 @@ new Vue({
             var damage=this.calculateDamage(3,7);
             this.monsterHealth-=damage;
             var manaRegen=2;
+            var lifesteal=10;
             this.playerMana+=manaRegen;
             if(damage == 5){
-                this.playerHealth+=damage+5;
-                this.logs.unshift("You heal yourself: "+damage+"HP");
+                this.playerHealth+=lifesteal;
+                this.logs.unshift("You heal yourself: +"+ lifesteal +"HP");
                 if(this.playerHealth > 100)
                     this.playerHealth = 100;
             }
