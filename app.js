@@ -6,7 +6,7 @@ new Vue({
         monsterHealth:100,
         playerHasMana:true,
         gameIsRunning:false,
-        logs:['Instructions:','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 6-15 damage','Potions heals 10-25HP','The monster can also heal itself']
+        logs:['Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 6-15 damage','Potions heals 10-25HP','The monster can also heal itself']
     },
     methods:{
         calculateDamage:function(min,max){
@@ -56,7 +56,7 @@ new Vue({
             this.monsterHealth=100;
             this.playerHasMana=true;
             this.gameIsRunning=true;
-            this.logs=['Instructions:','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 6-15 damage','Potions heals 10-25HP','The monster can also heal itself'];
+            this.logs=['Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 6-15 damage','Potions heals 10-25HP','The monster can also heal itself'];
 
         },
         ataque:function(){
