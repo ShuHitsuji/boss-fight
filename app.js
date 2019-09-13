@@ -145,15 +145,14 @@ new Vue({
         },
         rendirse:function(){
             this.logs=[];
+            this.gameIsRunning=false;
             this.logs.unshift("Too strong for you? ñam ñam ñam"); 
         },
         finalize: function(message) {
             this.gameIsRunning=false;
             setTimeout(() => { 
                 if(confirm(message))
-                    this.empezarJuego();
-                else
-                    this.rendirse();                
+                    this.empezarJuego();                         
               }, 500);  
           }
     }
