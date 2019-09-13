@@ -17,33 +17,32 @@ new Vue({
             this.checkMonsterFood(); 
             var damage=this.calculateDamage(5,12);
             if(this.calculateDamage(0,100)==75){
-                damage=100;//RNG HE CAN ONE SHOT U
+                this.playerHealth=0;//RNG HE CAN ONE SHOT U
                 this.logs.unshift("The monster ate u, hmmmm delicius, finally he ate some good food");
-            }
-            var healing=0;
-            var currentHealth=this.monsterHealth;
-            this.playerHealth-=damage;
-            if(damage==7){
-                this.monsterIcecream++;
-                this.logs.unshift("The monster found a new icecream!! Yummi")
-            }
-            if(damage>9){
-                this.monsterHealth+=damage;          
-                if((currentHealth+damage)>100){
-                    healing=damage-(this.monsterHealth-100);
-                    this.monsterHealth=100;
-                    if(healing>0)
-                        this.logs.unshift("The monster bites you and lifesteal: +"+healing+" HP");
-                }else{
-                    this.logs.unshift("The monster bites you and lifesteal: +"+damage+" HP");
-                }
+                this.checkWin(); 
             }else{
-                this.logs.unshift("The monster deal: "+damage+" damage to you");
-            }
-            setTimeout(()=>{
-                this.checkWin()
-             },1000);   
-            
+                var healing=0;
+                var currentHealth=this.monsterHealth;
+                this.playerHealth-=damage;
+                if(damage==7){
+                    this.monsterIcecream++;
+                    this.logs.unshift("The monster found a new icecream!! Yummi")
+                }
+                if(damage>9){
+                    this.monsterHealth+=damage;          
+                    if((currentHealth+damage)>100){
+                        healing=damage-(this.monsterHealth-100);
+                        this.monsterHealth=100;
+                        if(healing>0)
+                            this.logs.unshift("The monster bites you and lifesteal: +"+healing+" HP");
+                    }else{
+                        this.logs.unshift("The monster bites you and lifesteal: +"+damage+" HP");
+                    }
+                }else{
+                    this.logs.unshift("The monster deal: "+damage+" damage to you");
+                }
+                this.checkWin(); 
+            }            
         },
         checkMonsterFood(){
             var healing =this.calculateDamage(10,20);
@@ -55,20 +54,14 @@ new Vue({
         },
         checkWin:function(){
             if(this.monsterHealth<=0){
-                if(confirm('U WIN THIS TIME, play again?')){
-                    this.empezarJuego();
-                }else{
-                    this.gameIsRunning=false;
-                }
+                this.monsterHealth=0;
+                this.finalize('U won this time, play again?')
                 return true;
             }else if(this.playerHealth<=0){
-                if(confirm('U DIED! play again?')){
-                    this.empezarJuego();
-                }else{
-                    this.gameIsRunning=false;
-                }
+                this.playerHealth=0;
+                this.finalize('U DEAD, continue?');      
                 return true;
-            }
+            }   
             return false;
         },
         empezarJuego: function(){
@@ -88,6 +81,8 @@ new Vue({
             var manaRegen=2;
             var lifesteal=10;
             this.playerMana+=manaRegen;
+            if(this.playerMana>9)
+                this.playerMana=10;
             if(damage == 5){
                 this.playerHealth+=lifesteal;
                 this.logs.unshift("You heal yourself: +"+ lifesteal +"HP");
@@ -126,9 +121,6 @@ new Vue({
             }else{
                 this.playerHasMana = true;
             }
-            if(this.playerMana>10){
-                this.playerMana = 10;
-            }
         },
         curar:function(){
             this.logs=[];      
@@ -152,9 +144,17 @@ new Vue({
             }  
         },
         rendirse:function(){
-            this.logs=[]; 
+            this.logs=[];
+            this.logs.unshift("Too strong for you? ñam ñam ñam"); 
+        },
+        finalize: function(message) {
             this.gameIsRunning=false;
-            this.logs.unshift("Feels bad man, too strong for u?");
-        }
+            setTimeout(() => { 
+                if(confirm(message))
+                    this.empezarJuego();
+                else
+                    this.rendirse();                
+              }, 500);  
+          }
     }
 });
