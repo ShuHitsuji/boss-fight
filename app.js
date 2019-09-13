@@ -130,17 +130,19 @@ new Vue({
             if(this.playerHasMana){
                 this.monsterAttack();
                 var currentHealth=this.playerHealth;
-                this.playerHealth+=healing;
-                if(currentHealth<100)
-                    this.playerMana-=manaCost;
-                if((currentHealth+healing)>100){
-                    healingB=healing-(this.playerHealth-100);
-                    this.playerHealth=100;
-                    if(healingB>0)
-                        this.logs.unshift("You healed for: "+healingB+" HP");
-                }else{
-                    this.logs.unshift("You healed for: "+healing+" HP");
-                }                               
+                if(this.playerHealth > 0){
+                    this.playerHealth+=healing;
+                    if(currentHealth<100)
+                        this.playerMana-=manaCost;
+                    if((currentHealth+healing)>100){
+                        healingB=healing-(this.playerHealth-100);
+                        this.playerHealth=100;
+                        if(healingB>0)
+                            this.logs.unshift("You healed for: "+healingB+" HP");
+                    }else{
+                        this.logs.unshift("You healed for: "+healing+" HP");
+                    }
+                }                                   
             }  
         },
         rendirse:function(){
