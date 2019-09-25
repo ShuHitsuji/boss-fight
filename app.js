@@ -84,8 +84,8 @@ new Vue({
 
         },
         ataque:function(){
-            this.logs=[];
-            this.imagenPlayer='image/mage.png';
+            this.logs=['The monster has '+this.monsterIcecream+' souls'];
+            this.imagenPlayer='image/magenormal.png';
             var damage=this.calculateDamage(3,7);
             this.monsterHealth-=damage;
             var manaRegen=2;
@@ -99,7 +99,7 @@ new Vue({
                 if(this.playerHealth > 100)
                     this.playerHealth = 100;
             }
-            this.logs.unshift("You dealt: "+damage+" to the monster");
+            this.logs.unshift("You dealt: "+damage+" damage to the monster");
             if(this.checkWin()){
                 return;
             }
@@ -107,7 +107,7 @@ new Vue({
             this.monsterAttack();
         },
         ataqueEspecial:function(){
-            this.logs=[];
+            this.logs=['The monster has '+this.monsterIcecream+' souls'];
             var damage=this.calculateDamage(9,15);
             var manaCost=2;
             this.checkMana(manaCost);
@@ -115,7 +115,7 @@ new Vue({
                 this.imagenPlayer='image/special.png';
                 this.monsterHealth-=damage;
                 this.playerMana-=manaCost;
-                this.logs.unshift("You dealt: "+damage+" to the monster with your special attack");
+                this.logs.unshift("You dealt: "+damage+" damage to the monster with your special attack");
                 
                 if(this.checkWin()){
                     return;
@@ -134,7 +134,7 @@ new Vue({
             }
         },
         curar:function(){
-            this.logs=[];      
+            this.logs=['The monster has '+this.monsterIcecream+' souls'];      
             var manaCost=2;          
             var healing=this.calculateDamage(10,25);// random healing hehe
             this.checkMana(manaCost);
