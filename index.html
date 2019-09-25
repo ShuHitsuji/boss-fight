@@ -12,7 +12,7 @@
     <section class="row">
         <div class="small-6 columns">
             <h1 class="text-center">YOU</h1>
-            <img src="image/hero.png" alt="The hero" style="width:200px;height:200px;" class="img-center">
+            <img v-bind:src="imagenPlayer" alt="The hero" style="width:150px;height:150px;" class="img-center">
             <div class="healthbar">
                 <div class="healthbar text-center" style="background-color: rgb(32, 218, 57); margin: 0; color: white;"
                 :style="{width: playerHealth + '%'}">
@@ -28,7 +28,7 @@
         </div>
         <div class="small-6 columns">
             <h1 class="text-center">MONSTER</h1>
-            <img src="image/monster.png" alt="The monster" style="width:200px;height:200px;"  class="img-center">
+            <img src="image/tv.png" alt="The monster" style="width:150px;height:150px;"  class="img-center">
             <div class="healthbar">
                 <div class="healthbar text-center" style="background-color: rgb(243, 0, 0); margin: 0; color: white;"
                 :style="{width:monsterHealth + '%'}">

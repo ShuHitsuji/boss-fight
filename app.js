@@ -6,6 +6,7 @@ new Vue({
         monsterHealth:100,
         monsterIcecream:0,
         playerHasMana:true,
+        imagenPlayer:'image/mage.png',
         gameIsRunning:false,
         logs:['Welcome to RNG BOSS if u win u r so lucky','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself']
     },
@@ -59,6 +60,7 @@ new Vue({
                 return true;
             }else if(this.playerHealth<=0){
                 this.playerHealth=0;
+                this.imagenPlayer='image/dead.png';
                 this.finalize('U DEAD, continue?');      
                 return true;
             }   
@@ -69,6 +71,7 @@ new Vue({
             this.playerMana=10;
             this.monsterHealth=100;
             this.monsterIcecream=0,
+            this.imagenPlayer='image/mage.png';
             this.playerHasMana=true;
             this.gameIsRunning=true;
             this.logs=['Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself'];
@@ -76,6 +79,7 @@ new Vue({
         },
         ataque:function(){
             this.logs=[];
+            this.imagenPlayer='image/mage.png';
             var damage=this.calculateDamage(3,7);
             this.monsterHealth-=damage;
             var manaRegen=2;
@@ -102,6 +106,7 @@ new Vue({
             var manaCost=2;
             this.checkMana(manaCost);
             if(this.playerHasMana){
+                this.imagenPlayer='image/special.png';
                 this.monsterHealth-=damage;
                 this.playerMana-=manaCost;
                 this.logs.unshift("You deal: "+damage+" to the monster with your special attack");
@@ -131,6 +136,7 @@ new Vue({
                 this.monsterAttack();
                 var currentHealth=this.playerHealth;
                 if(this.playerHealth > 0){
+                    this.imagenPlayer='image/heal.png';
                     this.playerHealth+=healing;
                     if(currentHealth<100)
                         this.playerMana-=manaCost;
@@ -147,6 +153,7 @@ new Vue({
         },
         rendirse:function(){
             this.logs=[];
+            this.imagenPlayer='image/dead.png';
             this.gameIsRunning=false;
             this.logs.unshift("Too strong for you? ñam ñam ñam"); 
         },
