@@ -18,7 +18,8 @@ new Vue({
         monsterAttack:function(){
             this.checkMonsterFood(); 
             var damage=this.calculateDamage(5,12);
-            if(this.calculateDamage(0,100)==75){
+            var oneshot = this.calculateDamage(0,100);
+            if(oneshot == 75 || oneshot == 25 || oneshot == 99 || oneshot == 1){
                 this.playerHealth=0;//RNG HE CAN ONE SHOT U
                 this.logs.unshift("The monster ate u, hmmmm delicius, finally he ate some good food");
                 this.checkWin(); 
@@ -93,7 +94,7 @@ new Vue({
             this.playerMana+=manaRegen;
             if(this.playerMana>9)
                 this.playerMana=10;
-            if(damage == 5){
+            if(damage == 4){
                 this.playerHealth+=lifesteal;
                 this.logs.unshift("You healed yourself: +"+ lifesteal +"HP");
                 if(this.playerHealth > 100)
