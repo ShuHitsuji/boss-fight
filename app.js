@@ -5,6 +5,8 @@ new Vue({
         playerMana:10,
         monsterHealth:100,
         monsterIcecream:0,
+        victorias:0,
+        derrotas:0,
         playerHasMana:true,
         imagenPlayer:'image/mage.png',
         imagenBoss:'image/tv.png',
@@ -61,11 +63,13 @@ new Vue({
         checkWin:function(){
             if(this.monsterHealth<=0){
                 this.monsterHealth=0;
+                this.victorias++;
                 this.imagenBoss='image/tvdead.png'
                 this.finalize('U won this time, play again?')
                 return true;
             }else if(this.playerHealth<=0){
                 this.playerHealth=0;
+                this.derrotas++;
                 this.imagenPlayer='image/dead.png';
                 this.finalize('U DEAD, continue?');      
                 return true;
@@ -160,6 +164,7 @@ new Vue({
         },
         rendirse:function(){
             this.logs=[];
+            this.derrotas++;
             this.imagenPlayer='image/dead.png';
             this.gameIsRunning=false;
             this.logs.unshift("Too strong for you? ñam ñam ñam"); 
