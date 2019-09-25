@@ -7,6 +7,7 @@ new Vue({
         monsterIcecream:0,
         playerHasMana:true,
         imagenPlayer:'image/mage.png',
+        imagenBoss:'image/tv.png',
         gameIsRunning:false,
         logs:['Welcome to RNG BOSS if u win u r so lucky','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself']
     },
@@ -26,21 +27,24 @@ new Vue({
                 var currentHealth=this.monsterHealth;
                 this.playerHealth-=damage;
                 if(damage==7){
+                    this.imagenBoss='image/tvheal.png';
                     this.monsterIcecream++;
-                    this.logs.unshift("The monster found a new icecream!! Yummi")
+                    this.logs.unshift("The monster found a new soul!! Yummi")
                 }
                 if(damage>9){
+                    this.imagenBoss='image/tvheal.png';
                     this.monsterHealth+=damage;          
                     if((currentHealth+damage)>100){
                         healing=damage-(this.monsterHealth-100);
                         this.monsterHealth=100;
                         if(healing>0)
-                            this.logs.unshift("The monster bites you and lifesteal: +"+healing+" HP");
+                            this.logs.unshift("The monster bit you and lifesteal: +"+healing+" HP");
                     }else{
-                        this.logs.unshift("The monster bites you and lifesteal: +"+damage+" HP");
+                        this.logs.unshift("The monster bit you and lifesteal: +"+damage+" HP");
                     }
                 }else{
-                    this.logs.unshift("The monster deal: "+damage+" damage to you");
+                    this.imagenBoss='image/tv.png';
+                    this.logs.unshift("The monster dealt: "+damage+" damage to you");
                 }
                 this.checkWin(); 
             }            
@@ -50,12 +54,13 @@ new Vue({
             if(this.monsterIcecream>0 && this.monsterHealth<50){
                 this.monsterHealth+=healing;
                 this.monsterIcecream--;
-                this.logs.unshift("The monster lick his ice-cream and heal itself +"+ healing + "HP")
+                this.logs.unshift("The monster ate a soul and healed itself +"+ healing + "HP")
             }
         },
         checkWin:function(){
             if(this.monsterHealth<=0){
                 this.monsterHealth=0;
+                this.imagenBoss='image/tvdead.png'
                 this.finalize('U won this time, play again?')
                 return true;
             }else if(this.playerHealth<=0){
@@ -71,6 +76,7 @@ new Vue({
             this.playerMana=10;
             this.monsterHealth=100;
             this.monsterIcecream=0,
+            this.imagenBoss='image/tv.png'
             this.imagenPlayer='image/mage.png';
             this.playerHasMana=true;
             this.gameIsRunning=true;
@@ -89,11 +95,11 @@ new Vue({
                 this.playerMana=10;
             if(damage == 5){
                 this.playerHealth+=lifesteal;
-                this.logs.unshift("You heal yourself: +"+ lifesteal +"HP");
+                this.logs.unshift("You healed yourself: +"+ lifesteal +"HP");
                 if(this.playerHealth > 100)
                     this.playerHealth = 100;
             }
-            this.logs.unshift("You deal: "+damage+" to the monster");
+            this.logs.unshift("You dealt: "+damage+" to the monster");
             if(this.checkWin()){
                 return;
             }
@@ -109,7 +115,7 @@ new Vue({
                 this.imagenPlayer='image/special.png';
                 this.monsterHealth-=damage;
                 this.playerMana-=manaCost;
-                this.logs.unshift("You deal: "+damage+" to the monster with your special attack");
+                this.logs.unshift("You dealt: "+damage+" to the monster with your special attack");
                 
                 if(this.checkWin()){
                     return;
