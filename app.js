@@ -21,7 +21,7 @@ new Vue({
             this.checkMonsterFood(); 
             var damage=this.calculateDamage(5,12);
             var oneshot = this.calculateDamage(0,100);
-            if(oneshot == 75 || oneshot == 25 || oneshot == 99 || oneshot == 1){
+            if(oneshot == 75 || oneshot == 25 || oneshot == 50){
                 this.playerHealth=0;//RNG HE CAN ONE SHOT U
                 this.logs.unshift("The monster ate u, hmmmm delicius, finally he ate some good food");
                 this.checkWin(); 
