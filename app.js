@@ -172,6 +172,7 @@ new Vue({
             this.logs.unshift("Too strong for you? ñam ñam ñam"); 
         },
         finalize: function(message) {
+            this.logs=['Game over'];
             this.gameIsRunning=false;
             setTimeout(() => { 
                 if(confirm(message))
