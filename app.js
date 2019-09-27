@@ -30,7 +30,7 @@ new Vue({
                 var currentHealth=this.monsterHealth;
                 this.playerHealth-=damage;
                 if(damage==7){
-                    this.imagenBoss='image/tvheal.png';
+                    
                     this.monsterIcecream++;
                     this.logs.unshift("The monster found a new soul!! Yummi")
                 }
@@ -55,6 +55,7 @@ new Vue({
         checkMonsterFood(){
             var healing =this.calculateDamage(10,20);
             if(this.monsterIcecream>0 && this.monsterHealth<50){
+                this.imagenBoss='image/tvheal.png';
                 this.monsterHealth+=healing;
                 this.monsterIcecream--;
                 this.logs.unshift("The monster ate a soul and healed itself +"+ healing + "HP")
