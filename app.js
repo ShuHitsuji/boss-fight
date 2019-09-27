@@ -29,8 +29,7 @@ new Vue({
                 var healing=0;
                 var currentHealth=this.monsterHealth;
                 this.playerHealth-=damage;
-                if(damage==7){
-                    
+                if(damage==7){ 
                     this.monsterIcecream++;
                     this.logs.unshift("The monster found a new soul!! Yummi")
                 }
