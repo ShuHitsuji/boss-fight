@@ -18,7 +18,8 @@ new Vue({
             return Math.max(Math.floor(Math.random()*max)+1,min);
         },
         monsterAttack:function(){
-            this.checkMonsterFood(); 
+            this.imagenBoss='image/tv.png';
+            this.checkMonsterFood();  
             var damage=this.calculateDamage(5,12);
             var oneshot = this.calculateDamage(0,100);
             if(oneshot == 75 || oneshot == 25 || oneshot == 50){
@@ -45,9 +46,9 @@ new Vue({
                         this.logs.unshift("The monster bit you and lifesteal: +"+damage+" HP");
                     }
                 }else{
-                    this.imagenBoss='image/tv.png';
                     this.logs.unshift("The monster dealt: "+damage+" damage to you");
                 }
+                this.logs.unshift('The monster has '+this.monsterIcecream+' souls');
                 this.checkWin(); 
             }            
         },
@@ -89,7 +90,7 @@ new Vue({
 
         },
         ataque:function(){
-            this.logs=['The monster has '+this.monsterIcecream+' souls'];
+            this.logs=[];
             this.imagenPlayer='image/magenormal.png';
             var damage=this.calculateDamage(3,7);
             this.monsterHealth-=damage;
@@ -112,7 +113,7 @@ new Vue({
             this.monsterAttack();
         },
         ataqueEspecial:function(){
-            this.logs=['The monster has '+this.monsterIcecream+' souls'];
+            this.logs=[];
             var damage=this.calculateDamage(9,15);
             var manaCost=2;
             this.checkMana(manaCost);
@@ -131,6 +132,7 @@ new Vue({
             
         },
         checkMana:function(a){
+            this.logs=[];
             if(this.playerMana < a){
                 this.playerHasMana = false;
                 this.logs.unshift("You don't have enough Mana");
@@ -138,8 +140,8 @@ new Vue({
                 this.playerHasMana = true;
             }
         },
-        curar:function(){
-            this.logs=['The monster has '+this.monsterIcecream+' souls'];      
+        curar:function(){ 
+            this.logs=[];
             var manaCost=2;          
             var healing=this.calculateDamage(10,25);// random healing hehe
             this.checkMana(manaCost);
