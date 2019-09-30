@@ -36,7 +36,11 @@
             <img v-bind:src="imagenBoss" alt="The monster" style="width:150px;height:150px;"  class="img-center">
             <div class="healthbar">
                 <div class="healthbar text-center" style="background-color: rgb(243, 0, 0); margin: 0; color: white;"
-                :style="{width:monsterHealth + '%'}">
+                :style="{width:monsterHealth + '%'}"v-if="!quemado">
+                    {{monsterHealth}}
+                </div>
+                <div class="healthbar text-center" style="background-color: rgb(240, 116, 0); margin: 0; color: white;"
+                :style="{width:monsterHealth + '%'}"v-else>
                     {{monsterHealth}}
                 </div>
             </div>
@@ -49,10 +53,10 @@
     </section>
     <section class="row controls" v-else>
         <div class="small-12 columns" >
-            <button v-on:click="ataque" id="attack">ATTACK</button>
-            <button v-on:click="ataqueEspecial" id="special-attack" :disabled="!playerHasMana">SPECIAL ATTACK</button>
-            <button v-on:click="curar" id="heal":disabled="!playerHasMana">DRINK POTION</button>
-            <button v-on:click="rendirse" id="give-up">GIVE UP</button>
+            <button v-on:click="ataque" id="attack">Sacred Attack</button>
+            <button v-on:click="ataqueEspecial" id="special-attack" :disabled="!playerHasMana">Fire Ball</button>
+            <button v-on:click="curar" id="heal":disabled="!playerHasMana">Healing</button>
+            <button v-on:click="rendirse" id="give-up">Give Up</button>
         </div>
     </section>
     <section class="row log">
