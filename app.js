@@ -35,7 +35,7 @@ new Vue({
                 this.logs.unshift("The monster ate u, hmmmm delicius, finally he ate some good food");
                 this.checkWin(); 
             }else{
-                if(this.contadorTurnos > 40){
+                if(this.contadorTurnos > 60){
                     var dado = this.calculateDamage(0,10);
                     if(dado > 6){
                         this.playerHealth=0;//RNG HE CAN ONE SHOT U
