@@ -20,7 +20,11 @@
             <img v-bind:src="imagenPlayer" alt="The hero" style="width:150px;height:150px;" class="img-center">
             <div class="healthbar">
                 <div class="healthbar text-center" style="background-color: rgb(32, 218, 57); margin: 0; color: white;"
-                :style="{width: playerHealth + '%'}">
+                :style="{width: playerHealth + '%'}" v-if="!regenHp">
+                    {{playerHealth}}
+                </div>
+                <div class="healthbar text-center" style="background-color: rgb(40, 255, 86); margin: 0; color: white;"
+                :style="{width: playerHealth + '%'}" v-else>
                     {{playerHealth}}
                 </div>
             </div>
@@ -36,11 +40,11 @@
             <img v-bind:src="imagenBoss" alt="The monster" style="width:150px;height:150px;"  class="img-center">
             <div class="healthbar">
                 <div class="healthbar text-center" style="background-color: rgb(243, 0, 0); margin: 0; color: white;"
-                :style="{width:monsterHealth + '%'}"v-if="!quemado">
+                :style="{width:monsterHealth + '%'}" v-if="!quemado">
                     {{monsterHealth}}
                 </div>
                 <div class="healthbar text-center" style="background-color: rgb(240, 116, 0); margin: 0; color: white;"
-                :style="{width:monsterHealth + '%'}"v-else>
+                :style="{width:monsterHealth + '%'}" v-else>
                     {{monsterHealth}}
                 </div>
             </div>

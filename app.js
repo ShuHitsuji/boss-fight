@@ -8,6 +8,8 @@ new Vue({
         victorias:0,
         derrotas:0,
         contadorTurnos:0,
+        regenHp:false,
+        turnosRegenHp:0,
         quemado:false,
         turnosQuemado:0,
         playerHasMana:true,
@@ -24,7 +26,8 @@ new Vue({
             this.imagenBoss='image/tv.png';
             this.contadorTurnos++;
             this.checkMonsterFood();
-            this.checkQuemadura();  
+            this.checkQuemadura();
+            this.checkRegen();
             var damage=this.calculateDamage(5,12);
             var oneshot = this.calculateDamage(0,100);
             if(oneshot == 75 || oneshot == 50){
@@ -68,7 +71,7 @@ new Vue({
         },
         checkMonsterFood(){
             var healing =this.calculateDamage(5,15);
-            if(this.monsterIcecream > 0 && this.monsterHealth < 90){
+            if(this.monsterIcecream > 0 && this.monsterHealth < 60){
                 this.imagenBoss='image/tvheal.png';
                 this.monsterHealth+=healing;
                 this.monsterIcecream--;
@@ -98,6 +101,8 @@ new Vue({
             this.monsterIcecream = 0;
             this.quemado = false;
             this.turnosQuemado = 0;
+            this.regenHp = false;
+            this.turnosRegenHp = 0;
             this.contadorTurnos = 0;
             this.imagenBoss = 'image/tv.png'
             this.imagenPlayer = 'image/mage.png';
@@ -142,6 +147,19 @@ new Vue({
             }
             this.checkWin();
         },
+        checkRegen:function(){
+            var hpRegen = this.calculateDamage(3,5);
+            if(this.regenHp){
+                this.turnosRegenHp--;
+                this.playerHealth+= hpRegen;
+                this.logs.unshift("U regen "+ hpRegen+" hp");
+            }
+            if(this.turnosRegenHp === 0){
+                this.regenHp = false;
+            }else{
+                this.regenHp = true;
+            }
+        },
         ataqueEspecial:function(){
             this.logs=[];
             var damage=this.calculateDamage(9,15);
@@ -153,13 +171,12 @@ new Vue({
                 this.playerMana-=manaCost;
                 this.logs.unshift("You dealt: "+damage+" damage to the monster with your special attack");
                 if(damage<11 && !this.quemado){
-                    this.turnosQuemado=this.calculateDamage(0,4);
+                    this.turnosQuemado=this.calculateDamage(1,4);
                     this.logs.unshift("U burned the monster for "+ this.turnosQuemado +" turns");
                 }
                 if(this.checkWin()){
                     return;
                 }
-                
                 this.monsterAttack();
             }
             
@@ -184,6 +201,11 @@ new Vue({
                 if(this.playerHealth > 0){
                     this.imagenPlayer='image/heal.png';
                     this.playerHealth+=healing;
+                    if(healing<14 && !this.regenHp){
+                        this.turnosRegenHp=this.calculateDamage(1,5);
+                        this.logs.unshift("U gain hp regen for " + this.turnosRegenHp + " turns");
+                        this.regenHp = true;
+                    }
                     if(currentHealth<100)
                         this.playerMana-=manaCost;
                     if((currentHealth+healing)>100){
