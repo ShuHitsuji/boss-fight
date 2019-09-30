@@ -67,7 +67,7 @@ new Vue({
             }            
         },
         checkMonsterFood(){
-            var healing =this.calculateDamage(10,15);
+            var healing =this.calculateDamage(5,15);
             if(this.monsterIcecream > 0 && this.monsterHealth < 90){
                 this.imagenBoss='image/tvheal.png';
                 this.monsterHealth+=healing;
