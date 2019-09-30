@@ -129,7 +129,7 @@ new Vue({
             this.monsterAttack();
         },
         checkQuemadura:function(){
-            var burnDamage = this.calculateDamage(1,3);
+            var burnDamage = this.calculateDamage(2,5);
             if(this.quemado){
                 this.turnosQuemado--;
                 this.monsterHealth-= burnDamage;
@@ -144,7 +144,7 @@ new Vue({
         },
         ataqueEspecial:function(){
             this.logs=[];
-            var damage=this.calculateDamage(8,15);
+            var damage=this.calculateDamage(9,15);
             var manaCost=2;
             this.checkMana(manaCost);
             if(this.playerHasMana){
