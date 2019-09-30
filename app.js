@@ -148,7 +148,7 @@ new Vue({
             this.checkWin();
         },
         checkRegen:function(){
-            var hpRegen = this.calculateDamage(3,5);
+            var hpRegen = this.calculateDamage(5,10);
             if(this.regenHp){
                 this.turnosRegenHp--;
                 this.playerHealth+= hpRegen;
@@ -162,7 +162,7 @@ new Vue({
         },
         ataqueEspecial:function(){
             this.logs=[];
-            var damage=this.calculateDamage(9,15);
+            var damage=this.calculateDamage(9,20);
             var manaCost=2;
             this.checkMana(manaCost);
             if(this.playerHasMana){
@@ -170,7 +170,7 @@ new Vue({
                 this.monsterHealth-=damage;
                 this.playerMana-=manaCost;
                 this.logs.unshift("You dealt: "+damage+" damage to the monster with your special attack");
-                if(damage<11 && !this.quemado){
+                if(damage<14 && !this.quemado){
                     this.turnosQuemado=this.calculateDamage(1,4);
                     this.logs.unshift("U burned the monster for "+ this.turnosQuemado +" turns");
                 }
