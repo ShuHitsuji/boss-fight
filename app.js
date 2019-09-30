@@ -14,7 +14,7 @@ new Vue({
         imagenPlayer:'image/mage.png',
         imagenBoss:'image/tv.png',
         gameIsRunning:false,
-        logs:['Welcome to RNG BOSS if u win u r so lucky','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself']
+        logs:['Welcome to RNG BOSS if u win u r so lucky','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Sacred Attack regen +2MP & deal 3-7 damage','Fire Ball consume 2MP, deal 8-15 damage & could burn the monster','Healing magic heals 10-25HP','The monster can also heal itself']
     },
     methods:{
         calculateDamage:function(min,max){
@@ -103,8 +103,7 @@ new Vue({
             this.imagenPlayer = 'image/mage.png';
             this.playerHasMana = true;
             this.gameIsRunning = true;
-            this.logs = ['Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Attack regen +2MP & deal 3-7 damage','Special Attack consume 2MP & deal 9-15 damage','Potions heals 10-25HP','The monster can also heal itself'];
-
+            this.logs = ['Welcome to RNG BOSS if u win u r so lucky','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Sacred Attack regen +2MP & deal 3-7 damage','Fire Ball consume 2MP, deal 8-15 damage & could burn the monster','Healing magic heals 10-25HP','The monster can also heal itself'];
         },
         ataque:function(){
             this.logs=[];
