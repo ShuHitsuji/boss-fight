@@ -202,7 +202,7 @@ new Vue({
                     this.imagenPlayer='image/heal.png';
                     this.playerHealth+=healing;
                     if(healing<14 && !this.regenHp){
-                        this.turnosRegenHp=this.calculateDamage(1,5);
+                        this.turnosRegenHp=this.calculateDamage(3,6);
                         this.logs.unshift("U gain hp regen for " + this.turnosRegenHp + " turns");
                         this.regenHp = true;
                     }
