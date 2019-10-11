@@ -36,16 +36,16 @@
             </div>
         </div>
         <div class="small-6 columns">
-            <h1 class="text-center">{{monstruoActual.name}}</h1>
+            <h1 class="text-center">MONSTER</h1>
             <img v-bind:src="imagenBoss" alt="The monster" style="width:150px;height:150px;"  class="img-center">
             <div class="healthbar">
                 <div class="healthbar text-center" style="background-color: rgb(243, 0, 0); margin: 0; color: white;"
                 :style="{width:monsterHealth + '%'}" v-if="!quemado">
-                    {{monstruoActual.monsterHealth}}
+                    {{monsterHealth}}
                 </div>
                 <div class="healthbar text-center" style="background-color: rgb(240, 116, 0); margin: 0; color: white;"
                 :style="{width:monsterHealth + '%'}" v-else>
-                    {{monstruoActual.monsterHealth}}
+                    {{monsterHealth}}
                 </div>
             </div>
         </div>

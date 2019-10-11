@@ -1,58 +1,20 @@
-var monstruosidades= `{
-    "Slime": {
-      "name": "Slime",
-      "image": "image/slime.png",
-      "imageDeath":"image/slimedead.png",
-      "max_health": "50",
-      "quemado": "false",
-      "monsterIcecream":0,
-      "monsterHealth": 50,
-      "damage": 5,
-      "statusEffects": ""
-    },
-    "Wisp": {
-      "name": "Space Pirate",
-      "image": "image/wisp.png",
-      "imageDeath":"image/wispdead.png",
-      "max_health": "100",
-      "quemado": "false",
-      "monsterIcecream":0,
-      "monsterHealth": 100,
-      "damage": 15,
-      "statusEffects": ""
-    },
-    "Ghost": {
-      "name": "Ghost Tv",
-      "max_health": "120",
-      "quemado": "false",
-      "monsterIcecream":0,
-      "image": "image/tv.png",
-      "imageDeath":"image/tvdead.png",
-      "monsterHealth": 120,
-      "damage": 25,
-      "statusEffects": ""
-    }
-  }`;
-var monstruosJson = JSON.parse(monstruosidades);
-
 new Vue({
     el:"#app",
     data:{
         playerHealth:100,
         playerMana:10,
-        monstruoIdActual:0,
-        monstruoActual:0,
+        monsterHealth:100,
+        monsterIcecream:0,
         victorias:0,
-        turnosQuemado:0,
-        monsterHealth:0,
-        quemado:false,
         derrotas:0,
         contadorTurnos:0,
         regenHp:false,
         turnosRegenHp:0,
+        quemado:false,
+        turnosQuemado:0,
         playerHasMana:true,
         imagenPlayer:'image/mage.png',
-        imagenBoss:"",
+        imagenBoss:'image/tv.png',
         gameIsRunning:false,
         logs:['Welcome to RNG BOSS if u win u r so lucky','Instructions:','Green-bar is your health points','Lightblue-bar is your mana points','Sacred Attack regen +2MP & deal 3-7 damage','Fire Ball consume 2MP, deal 8-15 damage & could burn the monster','Healing magic heals 10-25HP','The monster can also heal itself']
     },
@@ -61,14 +23,14 @@ new Vue({
             return Math.max(Math.floor(Math.random()*max)+1,min);
         },
         monsterAttack:function(){
-            this.imagenBoss=this.monstruoActual.image;
+            this.imagenBoss='image/tv.png';
             this.contadorTurnos++;
             this.checkMonsterFood();
             this.checkQuemadura();
             this.checkRegen();
-            var damage=this.calculateDamage((this.monstruoActual.damage/-5),this.monstruoActual.damage);
-            var oneshot = this.calculateDamage(0,150);
-            if(oneshot == 75){
+            var damage=this.calculateDamage(5,12);
+            var oneshot = this.calculateDamage(0,100);
+            if(oneshot == 75 || oneshot == 50){
                 this.playerHealth=0;//RNG HE CAN ONE SHOT U
                 this.logs.unshift("The monster ate u, hmmmm delicius, finally he ate some good food");
                 this.checkWin(); 
@@ -82,18 +44,18 @@ new Vue({
                     }
                 }else{
                     var healing=0;
-                    var currentHealth=this.monstruoActual.monsterHealth;
+                    var currentHealth=this.monsterHealth;
                     this.playerHealth-=damage;
                     if(damage<7){ 
-                        this.monstruoActual.monsterIcecream++;
+                        this.monsterIcecream++;
                         this.logs.unshift("The monster found a new soul!! Yummi")
                     }
                     if(damage>9){
                         this.imagenBoss='image/tvheal.png';
-                        this.monstruoActual.monsterHealth+=damage/2;          
+                        this.monsterHealth+=damage;          
                         if((currentHealth+damage)>100){
-                            healing=damage-(this.monstruoActual.monsterHealth-100);
-                            this.monstruoActual.monsterHealth=100;
+                            healing=damage-(this.monsterHealth-100);
+                            this.monsterHealth=100;
                             if(healing>0)
                                 this.logs.unshift("The monster bit you and lifesteal: +"+healing+" HP");
                         }else{
@@ -102,26 +64,26 @@ new Vue({
                     }else{
                         this.logs.unshift("The monster dealt: "+damage+" damage to you");
                     }
-                    this.logs.unshift('The monster has '+this.monstruoActual.monsterIcecream+' souls');
+                    this.logs.unshift('The monster has '+this.monsterIcecream+' souls');
                     this.checkWin();
                     }
             }            
         },
         checkMonsterFood(){
             var healing =this.calculateDamage(5,15);
-            if(this.monstruoActual.monsterIcecream > 0 && this.monstruoActual.monsterHealth < 60){
-                this.monstruoActual.imagenBoss='image/tvheal.png';
-                this.monstruoActual.monsterHealth+=healing;
-                this.monstruoActual.monsterIcecream--;
+            if(this.monsterIcecream > 0 && this.monsterHealth < 60){
+                this.imagenBoss='image/tvheal.png';
+                this.monsterHealth+=healing;
+                this.monsterIcecream--;
                 this.logs.unshift("The monster ate a soul and healed itself +"+ healing + "HP")
             }
         },
         checkWin:function(){
-            if(this.monstruoActual.monsterHealth <= 0){
-                this.monstruoActual.monsterHealth = 0;
+            if(this.monsterHealth <= 0){
+                this.monsterHealth = 0;
                 this.victorias++;
-                this.monstruoActual.imagenBoss='image/tvdead.png';
-                this.finalize('U won this time, play again?');
+                this.imagenBoss='image/tvdead.png'
+                this.finalize('U won this time, play again?')
                 return true;
             }else if(this.playerHealth<=0){
                 this.playerHealth=0;
@@ -135,13 +97,14 @@ new Vue({
         empezarJuego: function(){
             this.playerHealth = 100;
             this.playerMana = 10;
+            this.monsterHealth = 100;
+            this.monsterIcecream = 0;
+            this.quemado = false;
             this.turnosQuemado = 0;
             this.regenHp = false;
             this.turnosRegenHp = 0;
-            this.monstruoIdActual=0;
-            this.monstruoActual = monstruosJson[this.monstruoIdActual];
             this.contadorTurnos = 0;
-            this.imagenBoss = monstruoActual.image,
+            this.imagenBoss = 'image/tv.png'
             this.imagenPlayer = 'image/mage.png';
             this.playerHasMana = true;
             this.gameIsRunning = true;
@@ -151,7 +114,7 @@ new Vue({
             this.logs=[];
             this.imagenPlayer='image/magenormal.png';
             var damage=this.calculateDamage(3,7);
-            this.monstruoActual.monsterHealth-=damage;
+            this.monsterHealth-=damage;
             var manaRegen=2;
             var lifesteal=10;
             this.playerMana+=manaRegen;
@@ -172,15 +135,15 @@ new Vue({
         },
         checkQuemadura:function(){
             var burnDamage = this.calculateDamage(2,5);
-            if(this.monstruoActual.quemado){
+            if(this.quemado){
                 this.turnosQuemado--;
-                this.monstruoActual.monsterHealth-= burnDamage;
+                this.monsterHealth-= burnDamage;
                 this.logs.unshift("The burn did "+ burnDamage +" damage");
             }
             if(this.turnosQuemado === 0){
-                this.monstruoActual.quemado = false;
+                this.quemado = false;
             }else{
-                this.monstruoActual.quemado = true;
+                this.quemado = true;
             }
             this.checkWin();
         },
@@ -204,10 +167,10 @@ new Vue({
             this.checkMana(manaCost);
             if(this.playerHasMana){
                 this.imagenPlayer='image/special.png';
-                this.monstruoActual.monsterHealth-=damage;
+                this.monsterHealth-=damage;
                 this.playerMana-=manaCost;
                 this.logs.unshift("You dealt: "+damage+" damage to the monster with your special attack");
-                if(damage<14 && !this.monstruoActual.quemado){
+                if(damage<14 && !this.quemado){
                     this.turnosQuemado=this.calculateDamage(1,4);
                     this.logs.unshift("U burned the monster for "+ this.turnosQuemado +" turns");
                 }
